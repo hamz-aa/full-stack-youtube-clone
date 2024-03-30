@@ -18,7 +18,7 @@ import SettingsBrightnessOutlinedIcon from "@mui/icons-material/SettingsBrightne
 
 const Container = styled.div`
   flex: 1;
-  background-color: #121010;
+  background-color: #121111;
   height: 100vh;
   color: white;
   font-size: 14px;
