@@ -14,7 +14,7 @@ const Container = styled.div`
 `;
 
 const Content = styled.div`
-  flex: 5;
+  flex: 4;
 `;
 
 const VideoWrapper = styled.div``;
@@ -120,6 +120,7 @@ const Video = () => {
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen
+            style={{ borderRadius: "15px" }}
           ></iframe>
         </VideoWrapper>
         <Title>Test Video</Title>

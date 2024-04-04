@@ -12,7 +12,7 @@ const Container = styled.div`
 
 const Image = styled.img`
   width: 100%;
-  height: ${(props) => (props.type === "sm" ? "120px" : "202px")};
+  height: ${(props) => (props.type === "sm" ? "115px" : "202px")};
   background: #999;
   flex: 1;
   border-radius: ${(props) => (props.type === "sm" ? "7px" : "10px")};

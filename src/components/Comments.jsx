@@ -18,6 +18,7 @@ const Avatar = styled.img`
 const Input = styled.input`
   border: none;
   border-bottom: 1px solid ${({ theme }) => theme.soft};
+  color: ${({ theme }) => theme.text};
   background-color: transparent;
   outline: none;
   padding: 5px;
