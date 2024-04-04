@@ -7,6 +7,7 @@ const Container = styled.div`
   position: sticky;
   top: 0;
   background-color: ${({ theme }) => theme.bgLighter};
+  color: ${({ theme }) => theme.text};
   height: 56px;
 `;
 
@@ -20,21 +21,29 @@ const Wrapper = styled.div`
 
 const Search = styled.div`
   position: absolute;
-  width: 40%;
+  width: 50%;
+  height: 40px;
   left: 0px;
   right: 0px;
   margin: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 5px;
+  padding: 0px 20px;
   border: 1px solid #ccc;
-  border-radius: 3px;
+  border-radius: 20px;
 `;
 
 const Input = styled.input`
   border: none;
+  border-right: 1px solid #ccc;
+  padding-right: 10px;
+  outline: none;
+  height: 100%;
+  width: 92%;
+  font-size: 16px;
   background-color: transparent;
+  color: ${({ theme }) => theme.text};
 `;
 
 const Button = styled.button`

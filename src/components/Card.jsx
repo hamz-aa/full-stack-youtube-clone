@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const Container = styled.div`
   width: ${(props) => props.type !== "sm" && "360px"};
-  margin-bottom: ${(props) => (props.type === "sm" ? "10px" : "45px")};
+  margin-bottom: ${(props) => (props.type === "sm" ? "10px" : "none")};
   cursor: pointer;
   display: ${(props) => props.type === "sm" && "flex"};
   gap: 10px;
@@ -15,6 +15,9 @@ const Image = styled.img`
   height: ${(props) => (props.type === "sm" ? "120px" : "202px")};
   background: #999;
   flex: 1;
+  border-radius: ${(props) => (props.type === "sm" ? "7px" : "10px")};
+  object-fit: cover;
+  object-position: center;
 `;
 
 const Details = styled.div`
@@ -43,7 +46,7 @@ const Title = styled.h1`
 const ChannelName = styled.h2`
   font-size: 14px;
   color: ${({ theme }) => theme.textSoft};
-  margin: 9px 0;
+  margin: 5px 0;
 `;
 
 const Info = styled.div`
@@ -57,7 +60,7 @@ const Card = ({ type }) => {
       <Container type={type}>
         <Image
           type={type}
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdXWN2ZSykSxjlHZ5pwHYklAHlX24NzUvjvw&usqp=CAU"
+          src="https://th.bing.com/th/id/OIP.amEbZWd9JRcIxkyVtYNODwHaE8?w=275&h=184&c=7&r=0&o=5&dpr=1.5&pid=1.7"
         />
         <Details type={type}>
           <ChannelImage
