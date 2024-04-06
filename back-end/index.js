@@ -1,6 +1,10 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import userRoute from "./routes/users.js";
+import videoRoute from "./routes/videos.js";
+import commentRoute from "./routes/comments.js";
+import authRoute from "./routes/auth.js";
 
 const app = express();
 dotenv.config();
@@ -13,6 +17,23 @@ const connect = () => {
       throw err;
     });
 };
+
+app.use(express.json());
+
+app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute);
+app.use("/api/video", videoRoute);
+app.use("/api/comment", commentRoute);
+
+app.use((err, req, res, next) => {
+  const status = err.status || 500;
+  const message = err.message || "Something went wrong!";
+  return res.status(status).json({
+    success: false,
+    status,
+    message,
+  });
+});
 
 app.listen(8080, () => {
   connect();
