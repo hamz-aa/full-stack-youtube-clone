@@ -24,7 +24,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
-app.use("/api/video", videoRoute);
+app.use("/api/videos", videoRoute);
 app.use("/api/comment", commentRoute);
 
 app.use((err, req, res, next) => {

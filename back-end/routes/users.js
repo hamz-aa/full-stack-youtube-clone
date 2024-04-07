@@ -16,21 +16,21 @@ const router = express.Router();
 router.put("/:id", verifyToken, update);
 
 // DELETE
-router.delete("/:id", deleteUser);
+router.delete("/:id", verifyToken, deleteUser);
 
 // GET
 router.get("/find/:id", getUser);
 
 // SUBSCRIBE
-router.put("/sub/:id", subscribe);
+router.put("/sub/:id", verifyToken, subscribe);
 
 // UNSUBSCRIBE
-router.put("/unsub/:id", unsubscribe);
+router.put("/unsub/:id", verifyToken, unsubscribe);
 
 // LIKE
-router.put("/like/:id", like);
+router.put("/like/:id", verifyToken, like);
 
 // DISLIKE
-router.put("/dislike/:id", dislike);
+router.put("/dislike/:id", verifyToken, dislike);
 
 export default router;
