@@ -25,7 +25,7 @@ app.use(express.json());
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/videos", videoRoute);
-app.use("/api/comment", commentRoute);
+app.use("/api/comments", commentRoute);
 
 app.use((err, req, res, next) => {
   const status = err.status || 500;
