@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Card from "../components/Card";
+import { useEffect, useState } from "react";
 
 const Container = styled.div`
   /* display: flex;
@@ -16,6 +17,12 @@ const Container = styled.div`
 `;
 
 const Home = () => {
+  const [videos, setVideos] = useState([]);
+
+  useEffect(() => {
+    const fetchVideos = async () => {};
+  }, []);
+
   return (
     <Container>
       <Card />
