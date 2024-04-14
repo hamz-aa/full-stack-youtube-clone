@@ -22,7 +22,7 @@ const Home = () => {
 
   useEffect(() => {
     const fetchVideos = async () => {
-      const res = await axios.get("videos/random");
+      const res = await axios.get("/videos/random");
       console.log(res);
       setVideos(res.data);
     };
