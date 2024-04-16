@@ -17,22 +17,22 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-const Home = () => {
+const Home = ({ type }) => {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
     const fetchVideos = async () => {
-      const res = await axios.get("http://localhost:8080/api/videos/random");
+      const res = await axios.get(`http://localhost:8080/api/videos/${type}`);
       console.log(res);
       setVideos(res.data);
     };
     fetchVideos();
-  }, []);
+  }, [type]);
 
   return (
     <Container>
       {videos.map((video) => (
-        <Card />
+        <Card key={video._id} video={video} />
       ))}
     </Container>
   );
