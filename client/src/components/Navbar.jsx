@@ -60,6 +60,9 @@ const Button = styled.button`
   gap: 5px;
 `;
 
+const User = styled.div``;
+const Avatar = styled.div``;
+
 const Navbar = () => {
   const { currentUser } = useSelector((state) => state.user);
 
