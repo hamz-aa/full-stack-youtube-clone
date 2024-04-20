@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { loginFailure, loginStart, loginSuccess } from "../redux/userSlice";
+import { auth, provider } from "../firebase";
+import { signInWithPopup } from "firebase/auth";
 
 const Container = styled.div`
   display: flex;
@@ -90,6 +92,12 @@ const SignIn = () => {
     }
   };
 
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, provider)
+      .then((res) => console.log(res))
+      .catch((err) => {});
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -105,6 +113,8 @@ const SignIn = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <Button onClick={handleLogin}>Sign In</Button>
+        <Title>or</Title>
+        <Button onClick={signInWithGoogle}>Signin with Google</Button>
         <Title>or</Title>
         <Input
           placeholder="username"
