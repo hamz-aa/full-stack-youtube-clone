@@ -22,7 +22,10 @@ const Home = ({ type }) => {
 
   useEffect(() => {
     const fetchVideos = async () => {
-      const res = await axios.get(`http://localhost:8080/api/videos/${type}`);
+      const res = await axios.get(`http://localhost:8080/api/videos/${type}`, {
+        withCredentials: true,
+        credentials: "include",
+      });
       setVideos(res.data);
     };
     fetchVideos();
