@@ -24,6 +24,7 @@ const Wrapper = styled.div`
   border: 1px solid ${({ theme }) => theme.soft};
   padding: 20px 50px;
   gap: 10px;
+  margin-top: 70px;
 `;
 
 const Title = styled.h1`
@@ -92,16 +93,33 @@ const SignIn = () => {
     }
   };
 
-  const signInWithGoogle = () => {
+  const signInWithGoogle = async () => {
+    dispatch(loginStart());
     signInWithPopup(auth, provider)
-      .then((res) => console.log(res))
-      .catch((err) => {});
+      .then((res) => {
+        axios
+          .post(
+            "http://localhost:8080/api/auth/google",
+            {
+              name: res.user.displayName,
+              email: res.user.email,
+              img: res.user.photoURL,
+            },
+            { withCredentials: true, credentials: "include" }
+          )
+          .then((res) => {
+            dispatch(loginSuccess(res.data));
+          });
+      })
+      .catch((err) => {
+        dispatch(loginFailure());
+      });
   };
 
   return (
     <Container>
       <Wrapper>
-        <Title>Sign in</Title>
+        <Title>Sign In</Title>
         <SubTitle>to Continue to UTube</SubTitle>
         <Input
           placeholder="username"
@@ -114,7 +132,7 @@ const SignIn = () => {
         />
         <Button onClick={handleLogin}>Sign In</Button>
         <Title>or</Title>
-        <Button onClick={signInWithGoogle}>Signin with Google</Button>
+        <Button onClick={signInWithGoogle}>Sign In with Google</Button>
         <Title>or</Title>
         <Input
           placeholder="username"
