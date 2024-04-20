@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import styled from "styled-components";
 import Card from "../components/Card";
 import { useEffect, useState } from "react";
