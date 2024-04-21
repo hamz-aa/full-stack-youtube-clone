@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { fetchSuccess } from "../redux/videoSlice";
+import { format } from "timeago.js";
 
 const Container = styled.div`
   display: flex;
@@ -113,24 +115,26 @@ const Subscribe = styled.button`
 
 const Video = () => {
   const { currentUser } = useSelector((state) => state.user);
+  const { currentVideo } = useSelector((state) => state.video);
   const dispatch = useDispatch();
 
   const path = useLocation().pathname.split("/")[2];
 
-  const [video, setVideo] = useState({});
   const [channel, setChannel] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const videoRes = await axios.get(
-          `http://localhost:8080/api/videos/find/${path}`
+          `http://localhost:8080/api/videos/find/${path}`,
+          { withCredentials: true, credentials: "include" }
         );
         const channelRes = await axios.get(
-          `http://localhost:8080/api/users/find/${videoRes.userId}`
+          `http://localhost:8080/api/users/find/${videoRes.data.userId}`,
+          { withCredentials: true, credentials: "include" }
         );
-        setVideo(videoRes.data);
-        channelRes(channelRes.data);
+        // setChannel(channelRes.data);
+        // dispatch(fetchSuccess(videoRes.data));
       } catch (error) {}
     };
     fetchData();
@@ -151,12 +155,14 @@ const Video = () => {
             style={{ borderRadius: "15px" }}
           ></iframe>
         </VideoWrapper>
-        <Title>Test Video</Title>
+        <Title>{currentVideo.title}</Title>
         <Details>
-          <Info>7,948,154 views • Jun 22, 2022</Info>
+          <Info>
+            {currentVideo.views} views • {format(currentVideo.createdAt)}
+          </Info>
           <Buttons>
             <Button>
-              <ThumbUpOutlined /> 123
+              <ThumbUpOutlined /> {currentVideo.likes?.length}
             </Button>
             <Button>
               <ThumbDownOffAltOutlined /> Dislike
@@ -172,16 +178,11 @@ const Video = () => {
         <Hr />
         <Channel>
           <ChannelInfo>
-            <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdXWN2ZSykSxjlHZ5pwHYklAHlX24NzUvjvw&usqp=CAU" />
+            <Image src={channel.img} />
             <ChannelDetail>
-              <ChannelName>Lama Dev</ChannelName>
-              <ChannelCounter>200K subscribers</ChannelCounter>
-              <Description>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illum
-                laboriosam nihil quo voluptate aliquid inventore ratione nemo?
-                Ipsum velit possimus amet aliquam tenetur atque autem adipisci
-                iste molestias dolor? Officia.
-              </Description>
+              <ChannelName>{channel.name}</ChannelName>
+              <ChannelCounter>{channel.subscribers} subscribers</ChannelCounter>
+              <Description>{currentVideo.desc}</Description>
             </ChannelDetail>
           </ChannelInfo>
           <Subscribe>SUBSCRIBE</Subscribe>
