@@ -1,7 +1,9 @@
 import {
   AddTaskOutlined,
   ReplyOutlined,
+  ThumbDown,
   ThumbDownOffAltOutlined,
+  ThumbUp,
   ThumbUpOutlined,
 } from "@mui/icons-material";
 import styled from "styled-components";
@@ -11,8 +13,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { fetchSuccess } from "../redux/videoSlice";
+import { dislike, fetchSuccess, like } from "../redux/videoSlice";
 import { format } from "timeago.js";
+import { subscription } from "../redux/userSlice";
 
 const Container = styled.div`
   display: flex;
@@ -113,6 +116,12 @@ const Subscribe = styled.button`
   cursor: pointer;
 `;
 
+const VideoFrame = styled.video`
+  max-height: 720px;
+  width: 100%;
+  object-fit: cover;
+`;
+
 const Video = () => {
   const { currentUser } = useSelector((state) => state.user);
   const { currentVideo } = useSelector((state) => state.video);
@@ -133,39 +142,72 @@ const Video = () => {
           `http://localhost:8080/api/users/find/${videoRes.data.userId}`,
           { withCredentials: true, credentials: "include" }
         );
-        // setChannel(channelRes.data);
-        // dispatch(fetchSuccess(videoRes.data));
+        setChannel(channelRes.data);
+        dispatch(fetchSuccess(videoRes.data));
       } catch (error) {}
     };
     fetchData();
-  }, [path]);
+  }, [path, dispatch]);
+
+  const handleLike = async () => {
+    await axios.put(`http://localhost:8080/api/users/like/${currentUser._id}`, {
+      withCredentials: true,
+      credentials: "include",
+    });
+    dispatch(like(currentUser._id));
+  };
+
+  const handleDislike = async () => {
+    await axios.put(
+      `http://localhost:8080/api/users/dislike/${currentUser._id}`,
+      { withCredentials: true, credentials: "include" }
+    );
+    dispatch(dislike(currentUser._id));
+  };
+
+  const handleSub = async () => {
+    currentUser.subscribedUsers.includes(channel._id)
+      ? await axios.put(
+          `http://localhost:8080/api/users/unsub/${channel._id}`,
+          {
+            withCredentials: true,
+            credentials: "include",
+          }
+        )
+      : await axios.put(`http://localhost:8080/api/users/sub/${channel._id}`, {
+          withCredentials: true,
+          credentials: "include",
+        });
+    dispatch(subscription(channel._id));
+  };
 
   return (
     <Container>
       <Content>
         <VideoWrapper>
-          <iframe
-            width="100%"
-            height="400"
-            src="https://www.youtube.com/embed/k3Vfj-e1Ma4"
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-            style={{ borderRadius: "15px" }}
-          ></iframe>
+          <VideoFrame src={currentVideo.videoUrl} />
         </VideoWrapper>
-        <Title>{currentVideo.title}</Title>
+        <Title>{currentVideo?.title}</Title>
         <Details>
           <Info>
-            {currentVideo.views} views • {format(currentVideo.createdAt)}
+            {currentVideo?.views} views • {format(currentVideo?.createdAt)}
           </Info>
           <Buttons>
-            <Button>
-              <ThumbUpOutlined /> {currentVideo.likes?.length}
+            <Button onClick={handleLike}>
+              {currentVideo?.likes?.includes(currentUser._id) ? (
+                <ThumbUp />
+              ) : (
+                <ThumbUpOutlined />
+              )}{" "}
+              {currentVideo?.likes?.length}
             </Button>
-            <Button>
-              <ThumbDownOffAltOutlined /> Dislike
+            <Button onClick={handleDislike}>
+              {currentVideo?.dislikes?.includes(currentUser._id) ? (
+                <ThumbDown />
+              ) : (
+                <ThumbDownOffAltOutlined />
+              )}{" "}
+              Dislike
             </Button>
             <Button>
               <ReplyOutlined /> Share
@@ -182,10 +224,14 @@ const Video = () => {
             <ChannelDetail>
               <ChannelName>{channel.name}</ChannelName>
               <ChannelCounter>{channel.subscribers} subscribers</ChannelCounter>
-              <Description>{currentVideo.desc}</Description>
+              <Description>{currentVideo?.desc}</Description>
             </ChannelDetail>
           </ChannelInfo>
-          <Subscribe>SUBSCRIBE</Subscribe>
+          <Subscribe onClick={handleSub}>
+            {currentUser?.subscribedUsers?.includes(channel._id)
+              ? "SUBSCRIBED"
+              : "SUBSCRIBE"}
+          </Subscribe>
         </Channel>
         <Hr />
         <Comments />
