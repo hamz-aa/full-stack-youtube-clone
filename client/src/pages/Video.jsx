@@ -185,7 +185,7 @@ const Video = () => {
     <Container>
       <Content>
         <VideoWrapper>
-          <VideoFrame src={currentVideo.videoUrl} />
+          <VideoFrame src={currentVideo?.videoUrl} />
         </VideoWrapper>
         <Title>{currentVideo?.title}</Title>
         <Details>
@@ -234,7 +234,7 @@ const Video = () => {
           </Subscribe>
         </Channel>
         <Hr />
-        <Comments />
+        <Comments videoId={currentVideo?._id} />
       </Content>
       {/* <Recommendation>
         <Card type="sm" />

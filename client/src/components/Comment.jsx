@@ -1,3 +1,6 @@
+/* eslint-disable react/prop-types */
+import axios from "axios";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -35,20 +38,30 @@ const Text = styled.span`
   font-size: 14px;
 `;
 
-const Comment = () => {
+const Comment = ({ comment }) => {
+  const [channel, setChannel] = useState([]);
+
+  useEffect(() => {
+    const fetchComment = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:8080/api/users/find/${comment.userId}`,
+          { withCredentials: true, credentials: "include" }
+        );
+        setChannel(res.data);
+      } catch (error) {}
+    };
+    fetchComment();
+  }, [comment.userId]);
+
   return (
     <Container>
-      <Avatar src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdXWN2ZSykSxjlHZ5pwHYklAHlX24NzUvjvw&usqp=CAU" />
+      <Avatar src={channel.img} />
       <Details>
         <Name>
-          John Doe <Date>1 day ago</Date>
+          {channel.name} <Date>1 day ago</Date>
         </Name>
-        <Text>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas
-          beatae libero iusto. Dolorum, ab, eligendi repellat, tempora expedita
-          porro et ducimus nam excepturi non nulla facere vitae id consequatur
-          reprehenderit.
-        </Text>
+        <Text>{comment.desc}</Text>
       </Details>
     </Container>
   );

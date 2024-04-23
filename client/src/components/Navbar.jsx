@@ -1,5 +1,6 @@
 import { SearchOutlined, VideoCallOutlined } from "@mui/icons-material";
 import AccountCircleOutlined from "@mui/icons-material/AccountCircleOutlined";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -76,6 +77,7 @@ const Avatar = styled.img`
 
 const Navbar = () => {
   const { currentUser } = useSelector((state) => state.user);
+  const [open, setOpen] = useState(false);
 
   return (
     <Container>
@@ -86,7 +88,7 @@ const Navbar = () => {
         </Search>
         {currentUser ? (
           <User>
-            <VideoCallOutlined />
+            <VideoCallOutlined onClick={() => setOpen(true)} />
             <Avatar src={currentUser.img} />
             {currentUser.name}
           </User>

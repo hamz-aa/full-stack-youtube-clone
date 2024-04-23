@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import Comment from "./Comment";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const Container = styled.div``;
 
@@ -25,17 +28,32 @@ const Input = styled.input`
   width: 100%;
 `;
 
-const Comments = () => {
+const Comments = ({ videoId }) => {
+  const { currentUser } = useSelector((state) => state.user);
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:8080/api/comments/${videoId}`,
+          { withCredentials: true, credentials: "include" }
+        );
+        setComments(res.data);
+      } catch (error) {}
+    };
+    fetchComments();
+  }, [videoId]);
+
   return (
     <Container>
       <NewComment>
-        <Avatar src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdXWN2ZSykSxjlHZ5pwHYklAHlX24NzUvjvw&usqp=CAU" />
+        <Avatar src={currentUser.img} />
         <Input placeholder="Add a Comment..." />
       </NewComment>
-      <Comment />
-      <Comment />
-      <Comment />
-      <Comment />
+      {comments.map((comment) => (
+        <Comment key={comment._id} comment={comment} />
+      ))}
     </Container>
   );
 };
