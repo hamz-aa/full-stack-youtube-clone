@@ -185,7 +185,7 @@ const Video = () => {
     <Container>
       <Content>
         <VideoWrapper>
-          <VideoFrame src={currentVideo?.videoUrl} />
+          <VideoFrame src={currentVideo?.videoUrl} controls />
         </VideoWrapper>
         <Title>{currentVideo?.title}</Title>
         <Details>
@@ -220,15 +220,17 @@ const Video = () => {
         <Hr />
         <Channel>
           <ChannelInfo>
-            <Image src={channel.img} />
+            <Image src={channel?.img} />
             <ChannelDetail>
-              <ChannelName>{channel.name}</ChannelName>
-              <ChannelCounter>{channel.subscribers} subscribers</ChannelCounter>
+              <ChannelName>{channel?.name}</ChannelName>
+              <ChannelCounter>
+                {channel?.subscribers} subscribers
+              </ChannelCounter>
               <Description>{currentVideo?.desc}</Description>
             </ChannelDetail>
           </ChannelInfo>
           <Subscribe onClick={handleSub}>
-            {currentUser?.subscribedUsers?.includes(channel._id)
+            {currentUser?.subscribedUsers?.includes(channel?._id)
               ? "SUBSCRIBED"
               : "SUBSCRIBE"}
           </Subscribe>
