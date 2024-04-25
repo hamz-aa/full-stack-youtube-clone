@@ -64,9 +64,9 @@ const Hr = styled.hr`
   margin: 15px 0;
 `;
 
-const Recommendation = styled.div`
-  flex: 2;
-`;
+// const Recommendation = styled.div`
+//   flex: 2;
+// `;
 
 const Channel = styled.div`
   display: flex;
