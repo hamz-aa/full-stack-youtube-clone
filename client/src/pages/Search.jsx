@@ -1,33 +1,37 @@
-import { useEffect, useState } from "react";
-import styled from "styled-components";
 import axios from "axios";
-import Card from "./Card";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import styled from "styled-components";
+import Card from "../components/Card";
 
 const Container = styled.div`
-  flex: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 `;
 
-const Recommendation = ({ tags }) => {
+const Search = () => {
   const [videos, setVideos] = useState([]);
+  const query = useLocation().search;
 
   useEffect(() => {
     const fetchVideos = async () => {
       const res = await axios.get(
-        `http://localhost:8080/api/videos/tags?tags=${tags}`,
+        `http://localhost:8080/api/videos/search${query}`,
         { withCredentials: true, credentials: "include" }
       );
       setVideos(res.data);
     };
     fetchVideos();
-  }, [tags]);
+  }, [query]);
 
   return (
     <Container>
       {videos.map((video) => (
-        <Card key={video._id} type="sm" video={video} />
+        <Card key={video._id} video={video} />
       ))}
     </Container>
   );
 };
 
-export default Recommendation;
+export default Search;
