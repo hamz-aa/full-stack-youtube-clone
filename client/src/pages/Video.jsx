@@ -8,7 +8,6 @@ import {
 } from "@mui/icons-material";
 import styled from "styled-components";
 import Comments from "../components/Comments";
-import Card from "../components/Card";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -145,7 +144,9 @@ const Video = () => {
         );
         setChannel(channelRes.data);
         dispatch(fetchSuccess(videoRes.data));
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     };
     fetchData();
   }, [path, dispatch]);

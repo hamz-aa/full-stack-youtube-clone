@@ -49,7 +49,9 @@ const Comment = ({ comment }) => {
           { withCredentials: true, credentials: "include" }
         );
         setChannel(res.data);
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     };
     fetchComment();
   }, [comment.userId]);

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import styled from "styled-components";
 import Comment from "./Comment";
 import { useEffect, useState } from "react";
@@ -40,7 +41,9 @@ const Comments = ({ videoId }) => {
           { withCredentials: true, credentials: "include" }
         );
         setComments(res.data);
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     };
     fetchComments();
   }, [videoId]);

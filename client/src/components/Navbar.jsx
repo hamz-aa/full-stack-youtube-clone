@@ -92,7 +92,7 @@ const Navbar = () => {
               placeholder="Search"
               onChange={(e) => setQuery(e.target.value)}
             />
-            <SearchOutlined onClick={() => navigate(`/search/q=${query}`)} />
+            <SearchOutlined onClick={() => navigate(`/search?q=${query}`)} />
           </Search>
           {currentUser ? (
             <User>
