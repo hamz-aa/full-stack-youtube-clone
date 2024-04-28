@@ -14,8 +14,8 @@ const Container = styled.div`
 `;
 
 const Image = styled.img`
-  width: 100%;
-  height: ${(props) => (props.type === "sm" ? "115px" : "202px")};
+  width: ${(props) => (props.type !== "sm" ? "100%" : "67%")};
+  height: ${(props) => (props.type === "sm" ? "110px" : "202px")};
   background: #999;
   flex: 1;
   border-radius: ${(props) => (props.type === "sm" ? "7px" : "10px")};
@@ -43,6 +43,7 @@ const Texts = styled.div``;
 const Title = styled.h1`
   font-size: 16px;
   font-weight: 500px;
+  margin-top: ${(props) => props.type === "sm" && "5px"};
   color: ${({ theme }) => theme.text};
 `;
 
@@ -80,7 +81,7 @@ const Card = ({ type, video }) => {
             src={channel.img || "/assets/no-profile.jpg"}
           />
           <Texts>
-            <Title>{video.title}</Title>
+            <Title type={type}>{video.title}</Title>
             <ChannelName>{channel?.name}</ChannelName>
             <Info>
               {video.views} views • {format(video.createdAt)}

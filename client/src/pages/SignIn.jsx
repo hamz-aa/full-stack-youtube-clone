@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { loginFailure, loginStart, loginSuccess } from "../redux/userSlice";
 import { auth, provider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -73,6 +74,7 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -87,6 +89,7 @@ const SignIn = () => {
         { withCredentials: true, credentials: "include" }
       );
       dispatch(loginSuccess(res.data));
+      navigate("/");
     } catch (error) {
       dispatch(loginFailure());
     }
@@ -108,6 +111,7 @@ const SignIn = () => {
           )
           .then((res) => {
             dispatch(loginSuccess(res.data));
+            navigate("/");
           });
       })
       .catch((err) => {

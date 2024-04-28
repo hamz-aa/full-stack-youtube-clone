@@ -11,11 +11,17 @@ const Container = styled.div`
   row-gap: 45px;
   column-gap: 60px;
   flex-wrap: wrap; */
+
   display: grid;
   grid-template-columns: repeat(auto-fit, 40%);
   row-gap: 45px;
   column-gap: 55px;
-  justify-content: center;
+  justify-content: ${(props) => (props.size === 1 ? "unset" : "center")};
+
+  /* display: flex;
+  flex-wrap: wrap;
+  gap: 45px;
+  justify-content: center; */
 `;
 
 const Home = ({ type }) => {
@@ -33,7 +39,7 @@ const Home = ({ type }) => {
   }, [type]);
 
   return (
-    <Container>
+    <Container size={videos.length}>
       {videos.map((video) => (
         <Card key={video._id} video={video} />
       ))}

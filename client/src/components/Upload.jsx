@@ -149,7 +149,6 @@ const Upload = ({ setOpen }) => {
 
   const handleUpload = async (e) => {
     e.preventDefault();
-    console.log(inputs, " ==> inputs");
     const res = await axios.post(
       "http://localhost:8080/api/videos",
       {
@@ -158,7 +157,6 @@ const Upload = ({ setOpen }) => {
       },
       { withCredentials: true, credentials: "include" }
     );
-    console.log(res.data, " ==> res.data");
     setOpen(false);
     res.status === 200 && navigate(`/video/${res.data._id}`);
   };
