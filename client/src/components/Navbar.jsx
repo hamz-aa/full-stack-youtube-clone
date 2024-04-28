@@ -9,6 +9,7 @@ import Upload from "./Upload";
 const Container = styled.div`
   position: sticky;
   top: 0;
+  z-index: 10;
   background-color: ${({ theme }) => theme.bgLighter};
   color: ${({ theme }) => theme.text};
   height: 56px;
@@ -96,8 +97,11 @@ const Navbar = () => {
           </Search>
           {currentUser ? (
             <User>
-              <VideoCallOutlined onClick={() => setOpen(true)} />
-              <Avatar src={currentUser.img} />
+              <VideoCallOutlined
+                onClick={() => setOpen(true)}
+                style={{ cursor: "pointer" }}
+              />
+              <Avatar src={currentUser.img || "/assets/no-profile.jpg"} />
               {currentUser.name}
             </User>
           ) : (

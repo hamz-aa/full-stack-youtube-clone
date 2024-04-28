@@ -10,10 +10,11 @@ import {
 import app from "../firebase";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { CancelOutlined } from "@mui/icons-material";
 
 const Container = styled.div`
   width: 100%;
-  height: 100%;
+  height: 133%;
   position: absolute;
   top: 0;
   left: 0;
@@ -34,12 +35,13 @@ const Wrapper = styled.div`
   flex-direction: column;
   gap: 20px;
   position: relative;
+  margin-top: -50px;
 `;
 
 const Close = styled.div`
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 13px;
+  right: 13px;
   cursor: pointer;
 `;
 
@@ -74,7 +76,7 @@ const Button = styled.button`
 `;
 
 const Label = styled.label`
-  font-size: 14px;
+  font-size: 18px;
 `;
 
 const Upload = ({ setOpen }) => {
@@ -92,6 +94,7 @@ const Upload = ({ setOpen }) => {
   };
 
   const handleChange = (e) => {
+    console.log(e.target.name);
     setInputs((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
@@ -146,6 +149,7 @@ const Upload = ({ setOpen }) => {
 
   const handleUpload = async (e) => {
     e.preventDefault();
+    console.log(inputs, " ==> inputs");
     const res = await axios.post(
       "http://localhost:8080/api/videos",
       {
@@ -154,6 +158,7 @@ const Upload = ({ setOpen }) => {
       },
       { withCredentials: true, credentials: "include" }
     );
+    console.log(res.data, " ==> res.data");
     setOpen(false);
     res.status === 200 && navigate(`/video/${res.data._id}`);
   };
@@ -161,7 +166,9 @@ const Upload = ({ setOpen }) => {
   return (
     <Container>
       <Wrapper>
-        <Close onClick={() => setOpen(false)}>X</Close>
+        <Close onClick={() => setOpen(false)}>
+          <CancelOutlined style={{ fontSize: "1.8rem" }} />{" "}
+        </Close>
         <Title>Upload a New Video</Title>
         <Label>Video</Label>
         {videoPerc > 0 ? (
@@ -182,7 +189,7 @@ const Upload = ({ setOpen }) => {
         <Desc
           placeholder="Description"
           rows={8}
-          name="desc"
+          name="description"
           onChange={handleChange}
         />
         <Input

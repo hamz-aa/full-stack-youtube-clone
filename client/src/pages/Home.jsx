@@ -28,7 +28,6 @@ const Home = ({ type }) => {
         credentials: "include",
       });
       setVideos(res.data);
-      console.log(res.data);
     };
     fetchVideos();
   }, [type]);

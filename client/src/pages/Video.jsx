@@ -187,7 +187,11 @@ const Video = () => {
     <Container>
       <Content>
         <VideoWrapper>
-          <VideoFrame src={currentVideo?.videoUrl} controls />
+          <VideoFrame
+            src={currentVideo?.videoUrl}
+            controls
+            style={{ borderRadius: "12px" }}
+          />
         </VideoWrapper>
         <Title>{currentVideo?.title}</Title>
         <Details>
@@ -222,7 +226,7 @@ const Video = () => {
         <Hr />
         <Channel>
           <ChannelInfo>
-            <Image src={channel?.img} />
+            <Image src={channel.img || "/assets/no-profile.jpg"} />
             <ChannelDetail>
               <ChannelName>{channel?.name}</ChannelName>
               <ChannelCounter>

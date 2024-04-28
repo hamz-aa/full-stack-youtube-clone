@@ -86,7 +86,6 @@ const SignIn = () => {
         },
         { withCredentials: true, credentials: "include" }
       );
-      console.log(res.data);
       dispatch(loginSuccess(res.data));
     } catch (error) {
       dispatch(loginFailure());

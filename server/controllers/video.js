@@ -8,6 +8,7 @@ export const addVideo = async (req, res, next) => {
     const savedVideo = await newVideo.save();
     res.status(200).json(savedVideo);
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
