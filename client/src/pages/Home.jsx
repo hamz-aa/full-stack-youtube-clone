@@ -33,6 +33,12 @@ const Home = ({ type }) => {
         withCredentials: true,
         credentials: "include",
       });
+      const like = await axios.put(
+        `http://localhost:8080/api/users/like/66124605e8279f2046d2d634`
+        // { withCredentials: true, credentials: "include" }
+      );
+      console.log(like);
+
       setVideos(res.data);
     };
     fetchVideos();

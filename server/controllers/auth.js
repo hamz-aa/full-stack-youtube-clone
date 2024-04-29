@@ -29,7 +29,12 @@ export const signin = async (req, res, next) => {
     const { password, ...others } = user._doc;
 
     res
-      .cookie("access_token", token, { httpOnly: true })
+      .cookie("access_token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        path: "/",
+      })
       .status(200)
       .json(others);
   } catch (error) {

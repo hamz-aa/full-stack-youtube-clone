@@ -142,6 +142,10 @@ const Video = () => {
           `http://localhost:8080/api/users/find/${videoRes.data.userId}`,
           { withCredentials: true, credentials: "include" }
         );
+        currentVideo &&
+          (await axios.put(
+            `http://localhost:8080/api/videos/view/${currentVideo?._id}`
+          ));
         setChannel(channelRes.data);
         dispatch(fetchSuccess(videoRes.data));
       } catch (error) {
@@ -149,14 +153,18 @@ const Video = () => {
       }
     };
     fetchData();
-  }, [path, dispatch]);
+  }, [path, dispatch, currentVideo]);
 
   const handleLike = async () => {
-    await axios.put(`http://localhost:8080/api/users/like/${currentUser._id}`, {
-      withCredentials: true,
-      credentials: "include",
-    });
-    dispatch(like(currentUser._id));
+    console.log(currentUser);
+    await axios.put(
+      `http://localhost:8080/api/users/like/${currentUser?._id}`,
+      {
+        withCredentials: true,
+        credentials: "include",
+      }
+    );
+    dispatch(like(currentUser?._id));
   };
 
   const handleDislike = async () => {
@@ -196,7 +204,8 @@ const Video = () => {
         <Title>{currentVideo?.title}</Title>
         <Details>
           <Info>
-            {currentVideo?.views} views • {format(currentVideo?.createdAt)}
+            {currentVideo?.views + 1 || 0} views •{" "}
+            {format(currentVideo?.createdAt)}
           </Info>
           <Buttons>
             <Button onClick={handleLike}>
