@@ -156,7 +156,6 @@ const Video = () => {
   }, [path, dispatch, currentVideo]);
 
   const handleLike = async () => {
-    console.log(currentUser);
     await axios.put(
       `http://localhost:8080/api/users/like/${currentUser?._id}`,
       {

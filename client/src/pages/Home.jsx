@@ -5,23 +5,11 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const Container = styled.div`
-  /* display: flex;
-  justify-content: baseline;
-  justify-items: center;
-  row-gap: 45px;
-  column-gap: 60px;
-  flex-wrap: wrap; */
-
   display: grid;
   grid-template-columns: repeat(auto-fit, 40%);
   row-gap: 45px;
   column-gap: 55px;
   justify-content: ${(props) => (props.size === 1 ? "unset" : "center")};
-
-  /* display: flex;
-  flex-wrap: wrap;
-  gap: 45px;
-  justify-content: center; */
 `;
 
 const Home = ({ type }) => {
@@ -33,11 +21,6 @@ const Home = ({ type }) => {
         withCredentials: true,
         credentials: "include",
       });
-      const like = await axios.put(
-        `http://localhost:8080/api/users/like/66124605e8279f2046d2d634`
-        // { withCredentials: true, credentials: "include" }
-      );
-      console.log(like);
 
       setVideos(res.data);
     };
