@@ -28,15 +28,17 @@ export const signin = async (req, res, next) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT);
     const { password, ...others } = user._doc;
 
+    const data = { ...others, token };
+
     res
       .cookie("access_token", token, {
         httpOnly: true,
-        secure: true,
-        sameSite: "none",
-        path: "/",
+        // secure: true,
+        // sameSite: "none",
+        // path: "/",
       })
       .status(200)
-      .json(others);
+      .json(data);
   } catch (error) {
     next(error);
   }

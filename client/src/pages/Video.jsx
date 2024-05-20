@@ -153,7 +153,7 @@ const Video = () => {
       }
     };
     fetchData();
-  }, [path, dispatch, currentVideo]);
+  }, []);
 
   const handleLike = async () => {
     await axios.put(
@@ -161,6 +161,10 @@ const Video = () => {
       {
         withCredentials: true,
         credentials: "include",
+        headers: {
+          Authorization: `Bearer ${currentUser.token}`,
+          "Content-Type": "application/json",
+        },
       }
     );
     dispatch(like(currentUser?._id));
@@ -169,7 +173,14 @@ const Video = () => {
   const handleDislike = async () => {
     await axios.put(
       `http://localhost:8080/api/users/dislike/${currentUser._id}`,
-      { withCredentials: true, credentials: "include" }
+      {
+        withCredentials: true,
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${currentUser.token}`,
+          "Content-Type": "application/json",
+        },
+      }
     );
     dispatch(dislike(currentUser._id));
   };
@@ -181,11 +192,19 @@ const Video = () => {
           {
             withCredentials: true,
             credentials: "include",
+            headers: {
+              Authorization: `Bearer ${currentUser.token}`,
+              "Content-Type": "application/json",
+            },
           }
         )
       : await axios.put(`http://localhost:8080/api/users/sub/${channel._id}`, {
           withCredentials: true,
           credentials: "include",
+          headers: {
+            Authorization: `Bearer ${currentUser.token}`,
+            "Content-Type": "application/json",
+          },
         });
     dispatch(subscription(channel._id));
   };
