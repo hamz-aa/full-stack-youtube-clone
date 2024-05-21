@@ -153,7 +153,7 @@ const Video = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [path]);
 
   const handleLike = async () => {
     await axios.put(
